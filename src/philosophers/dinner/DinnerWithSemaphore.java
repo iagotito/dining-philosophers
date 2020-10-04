@@ -52,12 +52,12 @@ public class DinnerWithSemaphore extends Dinner {
         if (getRightState(philosopherId) == PhilosopherStates.HUNGRY &&
             getRightState(getRight(philosopherId)) != PhilosopherStates.EATING) {
                 states[getRight(philosopherId)] = PhilosopherStates.EATING;
-                ((Semaphore) philosophers[philosopherId]).release();
+                ((Semaphore) philosophers[getRight(philosopherId)]).release();
         }
         if (getLeftState(philosopherId) == PhilosopherStates.HUNGRY &&
             getLeftState(getLeft(philosopherId)) != PhilosopherStates.EATING) {
                 states[getLeft(philosopherId)] = PhilosopherStates.EATING;
-                ((Semaphore) philosophers[philosopherId]).release();
+                ((Semaphore) philosophers[getLeft(philosopherId)]).release();
         }
         mutex.release();
     }

@@ -5,9 +5,9 @@ public class Philosopher implements Runnable {
     private int id;
     private int thinkingDuration;
 	private int eatingDuration;
-	private DinnerWithSemaphore dinner;
+	private Dinner dinner;
 
-    public Philosopher(int id, int thinkingDuration, int eatingDuration, DinnerWithSemaphore dinner) {
+    public Philosopher(int id, int thinkingDuration, int eatingDuration, Dinner dinner) {
 		this.id = id;
 		this.thinkingDuration = thinkingDuration;
 		this.eatingDuration = eatingDuration;
