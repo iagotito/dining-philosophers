@@ -2,13 +2,13 @@ package philosophers.dinner;
 
 import java.util.Scanner;
 
-public class PhilosophersDinner {
-    private static final int PHILOSOPHERS_NUMBER = 5;
+public class MainPhilosophersDinner {
+    private static final int PHILOSOPHERS_NUMBER = 7;
     private static final int PHILOSOPHERS_EATING_DURATION = 1000;
     private static final int PHILOSOPHERS_THINKING_DURATION = 1000;
     
     public static void main(String[] args) {
-        
+
         Scanner sc = new Scanner(System.in);
 
         Dinner dinner;
