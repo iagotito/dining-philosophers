@@ -1,30 +1,32 @@
 package philosophers.dinner;
 
+import java.util.ArrayList;
+
 public abstract class Dinner {
-    
-    protected PhilosopherStates[] states;
+
+	protected ArrayList<States> states;
 	protected Object[] philosophers;
     protected int totalPhilosophers;
 
-    public void take_cutlery(int philosopherId) {};
+    public void takeCutlery(int philosopherId) {};
 
-    public void return_cutlery(int philosopherId) {};
+    public void returnCutlery(int philosopherId) {};
 
     protected boolean canEat (int philosopherId) {
-		return (getRightState(philosopherId) != PhilosopherStates.EATING &&
-				getLeftState(philosopherId) != PhilosopherStates.EATING);
+		return (getRightState(philosopherId) != States.EATING &&
+				getLeftState(philosopherId) != States.EATING);
 	}
 
-	protected PhilosopherStates getRightState (int philosopherId) {
-		return states[getRight(philosopherId)];
+	protected States getRightState (int philosopherId) {
+		return states.get(getRight(philosopherId));
 	}
 
 	protected int getRight (int position) {
 		return (position + 1) % totalPhilosophers;
 	}
 
-	protected PhilosopherStates getLeftState (int philosopherId) {
-		return states[getLeft((philosopherId))];
+	protected States getLeftState (int philosopherId) {
+		return states.get(getLeft((philosopherId)));
 	}
 
 	protected int getLeft (int position) {

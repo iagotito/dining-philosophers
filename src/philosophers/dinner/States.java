@@ -1,5 +1,5 @@
 package philosophers.dinner;
 
-public enum PhilosopherStates {
+public enum States {
     THINKING, HUNGRY, EATING;
 }

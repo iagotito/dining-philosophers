@@ -19,37 +19,36 @@ public class Philosopher implements Runnable {
 	public void run() {
 		while(true) {
 			think();
-			take_cutlery();
+			takeCutlery();
 			eat();
-			return_cutlery();
+			returnCutlery();
 		}
     }
     
     private void think () {
 		try {
-			System.out.println("Philosopher " + this.id + " is thinking");
+			//System.out.println("Philosopher " + this.id + " is thinking.");
 			Thread.sleep(this.thinkingDuration);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 	}
 
-	private void take_cutlery () {
-		System.out.println("Philosopher " + this.id + " is trying get cutlery");
-		dinner.take_cutlery(this.id);
+	private void takeCutlery () {
+		//System.out.println("Philosopher " + this.id + " is trying get cutlery.");
+		dinner.takeCutlery(this.id);
 	}
 
 	private void eat () {
 		try {
-			System.out.println("Philosopher " + this.id + " is eating");
 			Thread.sleep(this.eatingDuration);
-			System.out.println("Philosopher " + this.id + " end eating");
+			//System.out.println("Philosopher " + this.id + " end eating.");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 	}
 	
-	private void return_cutlery () {
-		dinner.return_cutlery(this.id);
+	private void returnCutlery () {
+		dinner.returnCutlery(this.id);
 	}
 }
