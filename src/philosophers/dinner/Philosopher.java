@@ -14,7 +14,7 @@ public class Philosopher implements Runnable {
 		this.dinner = dinner;
         new Thread((Runnable)this, "Philosopher" + id).start();
     }
-    
+
     @Override
 	public void run() {
 		while(true) {
@@ -29,7 +29,6 @@ public class Philosopher implements Runnable {
 		try {
 			System.out.println("Philosopher " + this.id + " is thinking");
 			Thread.sleep(this.thinkingDuration);
-			System.out.println("Philosopher " + this.id + " end thinking");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -38,22 +37,19 @@ public class Philosopher implements Runnable {
 	private void take_cutlery () {
 		System.out.println("Philosopher " + this.id + " is trying get cutlery");
 		dinner.take_cutlery(this.id);
-		System.out.println("Philosopher " + this.id + " got the cutlery");
 	}
 
 	private void eat () {
 		try {
 			System.out.println("Philosopher " + this.id + " is eating");
 			Thread.sleep(this.eatingDuration);
-			System.out.println("Philosopher " + this.id + "end eating");
+			System.out.println("Philosopher " + this.id + " end eating");
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 	}
 	
 	private void return_cutlery () {
-		System.out.println("Philosopher " + this.id + " is returning the cutlery");
 		dinner.return_cutlery(this.id);
-		System.err.println("Philosopher " + this.id + " returned the cutlery");
 	}
 }

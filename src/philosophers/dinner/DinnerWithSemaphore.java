@@ -2,14 +2,12 @@ package philosophers.dinner;
 
 import java.util.concurrent.Semaphore;
 
-public class DinnerWithSemaphore {
+public class DinnerWithSemaphore extends Dinner {
     
     private Semaphore mutex;
-	private PhilosopherStates[] states;
-	private Semaphore[] philosophers;
-    private int totalPhilosophers;
-    
+     
     public DinnerWithSemaphore (int totalPhilosophers) {
+        super();
         this.mutex = new Semaphore(1);
         this.totalPhilosophers = totalPhilosophers;
         this.states = new PhilosopherStates[this.totalPhilosophers];
@@ -21,6 +19,7 @@ public class DinnerWithSemaphore {
 		}
     }
 
+    @Override
     public void take_cutlery (int philosopherId) {
         try {
             mutex.acquire();
@@ -29,55 +28,37 @@ public class DinnerWithSemaphore {
         }
         states[philosopherId] = PhilosopherStates.HUNGRY;
         if (canEat(philosopherId)) {
-            philosophers[philosopherId].release();
+            ((Semaphore) philosophers[philosopherId]).release();
             states[philosopherId] = PhilosopherStates.EATING;
         }
         mutex.release();
         try {
-        philosophers[philosopherId].acquire();
+            ((Semaphore) philosophers[philosopherId]).acquire();
+            System.out.println("Philosopher " + philosopherId + " got the cutlery");
         } catch (InterruptedException e) {
             System.out.println("Interrupted Exception");
         }
     }
 
+    @Override
     public void return_cutlery (int philosopherId) {
         try {
             mutex.acquire();
         } catch (InterruptedException e) {
             System.out.println("Interrupted Exception");
         }
+        System.err.println("Philosopher " + philosopherId + " returned the cutlery");
         states[philosopherId] = PhilosopherStates.THINKING;
         if (getRightState(philosopherId) == PhilosopherStates.HUNGRY &&
             getRightState(getRight(philosopherId)) != PhilosopherStates.EATING) {
                 states[getRight(philosopherId)] = PhilosopherStates.EATING;
-                philosophers[getRight(philosopherId)].release();
+                ((Semaphore) philosophers[philosopherId]).release();
         }
         if (getLeftState(philosopherId) == PhilosopherStates.HUNGRY &&
             getLeftState(getLeft(philosopherId)) != PhilosopherStates.EATING) {
                 states[getLeft(philosopherId)] = PhilosopherStates.EATING;
-                philosophers[getLeft(philosopherId)].release();
+                ((Semaphore) philosophers[philosopherId]).release();
         }
         mutex.release();
-    }
-
-    private boolean canEat (int philosopherId) {
-        return (getRightState(philosopherId) != PhilosopherStates.EATING &&
-                getLeftState(philosopherId) != PhilosopherStates.EATING);
-    }
-
-    private PhilosopherStates getRightState (int philosopherId) {
-        return states[getRight(philosopherId)];
-    }
-
-    private int getRight (int position) {
-        return (position + 1) % totalPhilosophers;
-    }
-
-    private PhilosopherStates getLeftState (int philosopherId) {
-        return states[getLeft((philosopherId))];
-    }
-
-    private int getLeft (int position) {
-        return (position + totalPhilosophers - 1) % totalPhilosophers;
     }
 }
